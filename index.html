@@ -149,6 +149,19 @@
   textarea{resize:vertical;min-height:64px}
   .field .note{font-size:10.5px;color:var(--muted);line-height:1.45}
 
+  /* 본사 고정 문구(수정 불가) */
+  .field.locked .lock-box{
+    display:flex;align-items:center;gap:8px;
+    border:1px dashed #D5D0C7;background:#F4F2EC;color:#2C322F;
+    border-radius:9px;padding:9px 11px;font-size:12.5px;font-weight:700;letter-spacing:.01em;
+  }
+  .field.locked .lock-box svg{flex:0 0 13px;display:block}
+  .field.locked .lock-box .txt{letter-spacing:.02em}
+  .lock-badge{
+    display:inline-block;margin-left:6px;padding:1px 6px 2px;border-radius:999px;
+    background:rgba(29,84,80,.10);color:#1D5450;font-size:9px;font-weight:800;letter-spacing:.08em;vertical-align:1px;
+  }
+
   .switch{
     display:flex;align-items:center;justify-content:space-between;gap:12px;
     padding:2px 0;cursor:pointer;
@@ -338,17 +351,27 @@
     <section class="sec">
       <div class="sec-head"><h2>브랜드 표기</h2><span class="hint">자동 저장됨</span></div>
       <div class="sec-body">
+        <div class="field locked">
+          <label>본사 고정 문구<span class="lock-badge">LOCK</span></label>
+          <div class="lock-box">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#1D5450" stroke-width="2" stroke-linecap="round">
+              <rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>
+            </svg>
+            <span class="txt">이로우라 뉴로아로마 안면비대칭</span>
+          </div>
+          <span class="note">카드 하단에 항상 들어갑니다. 수정하거나 끌 수 없고, 지사명만 아래에서 바꿀 수 있습니다.</span>
+        </div>
         <div class="field">
           <label for="i-branch">하단 지사명 / 표기</label>
           <input type="text" id="i-branch" data-bind="branch" placeholder="ILOURA · 이로우라">
-          <span class="note">워터마크 문구로도 함께 쓰입니다.</span>
+          <span class="note">본사 고정 문구 바로 아래 줄에 들어갑니다. 중앙 워터마크에는 고정 문구가 찍힙니다.</span>
         </div>
         <div class="field">
           <label for="i-sub">하단 보조 문구</label>
           <input type="text" id="i-sub" data-bind="sub" placeholder="안면비대칭 · 정면">
         </div>
         <label class="switch">
-          <span class="t">중앙 워터마크<span class="s">반투명 로고 문구를 가운데에 겹칩니다</span></span>
+          <span class="t">중앙 워터마크<span class="s">‘이로우라 뉴로아로마 안면비대칭’ 문구를 가운데에 반투명하게 겹칩니다</span></span>
           <input type="checkbox" data-bind="watermark"><span class="sw"></span>
         </label>
         <label class="switch">
@@ -564,7 +587,7 @@
           3. 각 칸의 <b>사진 선택</b>으로 전·후 사진을 넣습니다.<br>
           4. 칸을 눌러 <b>확대(최대 6배)·좌우·상하</b>를 맞춥니다. 가이드선에 눈과 턱을 기준으로 맞추면 편합니다.<br>
           5. 2분할 부위 강조형은 <b>창 위치</b>로 부위를 잡고 <b>창 크기(가로 폭·세로 높이 따로)</b>·<b>창 안 사진</b>으로 맞춥니다(창은 전·후 따로). 눈매를 보여줄 때는 <b>눈매 위치</b>를 누르면 가로 1.50× · 세로 0.55×의 납작한 가로 창이 됩니다.<br>
-          6. 지사명과 문구를 고친 뒤 <b>PNG 저장</b>을 누릅니다.
+          6. 지사명과 문구를 고친 뒤 <b>PNG 저장</b>을 누릅니다. 하단의 <b>이로우라 뉴로아로마 안면비대칭</b>은 본사 고정 문구라 수정·해제되지 않습니다.
         </span></div>
         <div class="field"><span class="note">문구·지사명은 이 브라우저에 자동 저장됩니다. 사진은 저장되지 않으니 새로고침하면 다시 넣어주세요.</span></div>
       </div>
@@ -625,6 +648,8 @@ let W = 1080, H = 1080;   // 카드 비율에 따라 render()에서 바뀐다 (1
 const C = {ivory:'#F9F8F5', line:'#E5E2DC', ink:'#222524', teal:'#1D5450', tealSoft:'#2A6A64',
            terra:'#9D4B37', muted:'#8B8F8A', paper:'#FFFFFF'};
 const FONT = 'Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif';
+/* 본사 고정 카피라이트 — 편집기에서 바꿀 수 없는 값 */
+const COPYRIGHT = '이로우라 뉴로아로마 안면비대칭';
 const CAN_FILTER = (function(){
   try{ const c = document.createElement('canvas').getContext('2d'); return 'filter' in c; }catch(e){ return false; }
 })();
@@ -912,23 +937,42 @@ function drawTrust(c, dark){
   return y - 8;
 }
 
-/* ── 워터마크 ── */
+/* ── 중앙 워터마크 (본사 고정 문구) ── */
 function drawWatermark(c, dark){
-  if(!state.watermark || !state.branch) return;
+  if(!state.watermark) return;
   c.save();
   c.translate(W/2, H/2);
   c.rotate(-Math.PI/9);
-  const fs = state.branch.length > 14 ? 76 : 92;
-  c.font = '800 ' + fs + 'px ' + FONT;
-  c.fillStyle = dark ? 'rgba(255,255,255,.07)' : 'rgba(34,37,36,.055)';
+  const main = COPYRIGHT;
+  const sub = (state.branch && state.branch.trim() && state.branch.trim() !== main) ? state.branch.trim() : '';
+  const measure = (t, size)=>{
+    c.font = '800 ' + size + 'px ' + FONT;
+    let w = 0; for(const ch of Array.from(t)) w += c.measureText(ch).width + size*0.06;
+    return w;
+  };
+  let fs = 84;
+  while(fs > 24 && measure(main, fs) > 900) fs -= 2;
+  c.fillStyle = dark ? 'rgba(255,255,255,.075)' : 'rgba(34,37,36,.058)';
   c.textAlign = 'center'; c.textBaseline = 'middle';
-  spaced(c, state.branch, 0, 0, fs*0.06, 'center');
+  c.font = '800 ' + fs + 'px ' + FONT;
+  spaced(c, main, 0, sub ? -fs*0.34 : 0, fs*0.06, 'center');
+  if(sub){
+    const fs2 = Math.max(16, Math.round(fs*0.40));
+    c.font = '800 ' + fs2 + 'px ' + FONT;
+    spaced(c, sub, 0, fs*0.50, fs2*0.12, 'center');
+  }
   c.restore();
 }
 
-/* ── 하단 푸터 ── */
+/* ── 하단 푸터 (본사 고정 카피라이트 줄 + 지사명) ── */
 function drawFooter(c, dark, yLine, yText){
   c.save();
+  // 본사 고정 문구 — 지사명 위, 수정·해제 불가
+  c.font = '600 16px ' + FONT;
+  c.fillStyle = dark ? 'rgba(255,255,255,.78)' : 'rgba(29,84,80,.62)';
+  c.textAlign = 'left'; c.textBaseline = 'alphabetic';
+  spaced(c, COPYRIGHT, 72, yLine - 21, 2.6, 'left');
+
   const lineColor = dark ? 'rgba(255,255,255,.22)' : C.line;
   c.strokeStyle = lineColor; c.lineWidth = 1;
   c.beginPath(); c.moveTo(72, yLine); c.lineTo(W-72, yLine); c.stroke();
@@ -991,9 +1035,10 @@ function drawGuides(c, x, y, w, h, round){
 function drawT1(c, S){
   const M = 72, IW = 456, GAP = 24;
   const EX = H - 1080;
-  const IH = Math.round(IW + EX*0.45);                  // 1:1 456 · 4:5 578
   const titleTop = state.trustOn ? 196 : 168;
-  const imgY = titleTop + 232 + Math.round(EX*0.45);    // 1:1 428 · 4:5 549
+  // 4:5에서는 제목 블록 아래 간격을 36px로 고정하고, 늘어난 세로 공간은 사진 높이로 넘긴다
+  const imgY = titleTop + (EX > 0 ? 197 : 232);      // 1:1 428 · 4:5 393
+  const IH = EX > 0 ? (H - 212) - imgY : IW;         // 1:1 456 · 4:5 745
   drawTrust(c, false);
 
   c.save();
@@ -1005,7 +1050,7 @@ function drawT1(c, S){
   c.fillText(cut(c, S.t2, 936), M, titleTop + 158);
   c.restore();
 
-  const imgBottom = imgY + IH;
+  const imgBottom = imgY + IH;   // 사진 하단(푸터 간격 계산용)
   drawSlot(c, 'b', M, imgY, IW, IH, {radius:6, tone:'b', stroke:'rgba(34,37,36,.06)'});
   drawSlot(c, 'a', M + IW + GAP, imgY, IW, IH, {radius:6, tone:'a', stroke:'rgba(29,84,80,.16)'});
   drawGuides(c, M, imgY, IW, IH);
@@ -1014,14 +1059,16 @@ function drawT1(c, S){
   pill(c, S.pb || '관리전', M + 16, imgY + 16, C.terra, '#FBF7F4', 20, IW - 32);
   pill(c, S.pa || '관리 후', M + IW + GAP + 16, imgY + 16, C.teal, '#F6F4EF', 20, IW - 32);
 
-  drawFooter(c, false, imgBottom + 40, imgBottom + 94);
+  drawFooter(c, false, EX > 0 ? H - 156 : H - 140, EX > 0 ? H - 102 : H - 86);
 }
 
 /* ══════════════ T2 2분할 축 비교형 ══════════════ */
 function drawT2(c, S){
   const M = 72, IW = 456, GAP = 24;
   const EX = H - 1080;
-  const IH = Math.round(IW + EX*0.70);                  // 1:1 456 · 4:5 645
+  // 제목 아래 간격: 1:1 63px · 4:5 36px
+  const imgY = (state.trustOn ? 160 : 118) + Math.round(EX*0.04) + (EX > 0 ? 41 : 68);
+  const IH = EX > 0 ? IW + EX : IW;                     // 1:1 456 · 4:5 726
   drawTrust(c, false);
 
   c.save();
@@ -1029,7 +1076,6 @@ function drawT2(c, S){
   c.fillText(cut(c, S.title || '', 860), W/2, (state.trustOn ? 160 : 118) + Math.round(EX*0.04));
   c.restore();
 
-  const imgY = (state.trustOn ? 228 : 186) + Math.round(EX*0.15);
   drawSlot(c, 'b', M, imgY, IW, IH, {radius:4, tone:'b', stroke:'rgba(34,37,36,.06)'});
   drawSlot(c, 'a', M + IW + GAP, imgY, IW, IH, {radius:4, tone:'a', stroke:'rgba(29,84,80,.16)'});
   drawGuides(c, M, imgY, IW, IH);
@@ -1053,7 +1099,7 @@ function drawT2(c, S){
   lines.forEach((l,i)=> c.fillText(l, W/2, baseY + i*40));
   c.restore();
 
-  drawFooter(c, false, H - 128, H - 78);
+  drawFooter(c, false, EX > 0 ? H - 156 : H - 128, EX > 0 ? H - 102 : H - 78);
 }
 
 function axisOverlay(c, x, y, w, h, o, color){
@@ -1200,17 +1246,19 @@ function drawT4(c, S){
   const M = 72, GAP = 16;
   const EX = H - 1080;
   const pw = (936 - GAP*2) / 3;
-  const ph = Math.round(pw * 1.43 + EX*0.50);      // 1:1 431 · 4:5 566
 
   drawTrust(c, false);
 
-  const titleTop = (state.trustOn ? 178 : 146) + Math.round(EX*0.06);
+  const titleTop = (state.trustOn ? 178 : 146) + (EX > 0 ? 16 : 0);
   c.save();
   c.font = '700 46px ' + FONT; c.fillStyle = C.teal; c.textAlign = 'left';
   c.fillText(cut(c, S.title || '', 936), M, titleTop + 40);
   c.restore();
 
-  const imgY = titleTop + 96;
+  // 제목 아래 간격: 1:1 52px · 4:5 36px
+  const imgY = titleTop + (EX > 0 ? 80 : 96);
+  const boxH = EX > 0 ? 145 : 118;
+  const ph = EX > 0 ? (H - 222) - boxH - 60 - imgY : Math.round(pw * 1.43);  // 1:1 431 · 4:5 649
   const labels = [S.l1, S.l2, S.l3];
   const keys = ['s1','s2','s3'];
 
@@ -1224,7 +1272,7 @@ function drawT4(c, S){
   c.save();
   c.font = '500 26px ' + FONT; c.fillStyle = '#5C625E'; c.textAlign = 'center';
   const lines = wrap(c, S.sum || '', 800).slice(0,2);
-  const boxY = imgY + ph + 60 + Math.round(EX*0.10), boxH = 118 + Math.round(EX*0.06);
+  const boxY = imgY + ph + 60;
   c.fillStyle = '#FCFBF9'; c.strokeStyle = C.line; c.lineWidth = 1;
   rr(c, M, boxY, 936, boxH, 10); c.fill(); c.stroke();
   c.fillStyle = '#5C625E';
@@ -1232,13 +1280,14 @@ function drawT4(c, S){
   lines.forEach((l,i)=> c.fillText(l, W/2, cy0 + i*38 + 9));
   c.restore();
 
-  drawFooter(c, false, H - 128, H - 78);
+  drawFooter(c, false, EX > 0 ? H - 156 : H - 128, EX > 0 ? H - 102 : H - 78);
 }
 
 /* ══════════════ T5 원인 포인트형 ══════════════ */
 function drawT5(c, S){
   const M = 72;
   const EX = H - 1080;
+  const wide = EX > 0;
   drawTrust(c, false);
 
   const titleTop = state.trustOn ? 188 : 150;
@@ -1248,11 +1297,11 @@ function drawT5(c, S){
   lines.forEach((l,i)=> c.fillText(l, M, titleTop + i*60));
   c.restore();
 
-  // 원형 사진
-  const d = 420 + Math.round(EX*0.30);              // 1:1 420 · 4:5 501
-  const cx = 278 + Math.round((d - 420)/2);
+  // 원형 사진 (4:5에서는 더 크게, 옆 콜아웃과 겹치지 않도록 중심도 오른쪽으로)
+  const d = wide ? 520 : 420;
+  const cx = wide ? 300 : 278;
   const top = titleTop + (lines.length > 1 ? 118 : 86);
-  const circY = Math.max(top, 358) + d/2 + Math.round(EX*0.06);
+  const circY = Math.max(top, wide ? 344 : 358) + d/2;
   drawSlot(c, 'main', cx - d/2, circY - d/2, d, d, {round:true, tone:'a'});
   drawGuides(c, cx - d/2, circY - d/2, d, d, true);
   c.save();
@@ -1279,9 +1328,11 @@ function drawT5(c, S){
   });
   c.restore();
 
-  // 포인트 박스
-  const bw = (936 - 28) / 3, bh = 132 + Math.round(EX*0.32);
-  const by = (H - 64) - 36 - bh;
+  // 포인트 박스 — 푸터(고정 카피라이트 줄) 위에 일정 간격을 두고 놓는다
+  const footLine = wide ? H - 156 : H - 64;
+  const footText = wide ? H - 102 : H - 22;
+  const bw = (936 - 28) / 3, bh = wide ? 206 : 132;
+  const by = footLine - 51 - bh;
   const pad = Math.round((bh - 132)/2);
   const pts = [[S.p1,S.d1],[S.p2,S.d2],[S.p3,S.d3]];
   pts.forEach((p,i)=>{
@@ -1301,7 +1352,7 @@ function drawT5(c, S){
     c.restore();
   });
 
-  drawFooter(c, false, H - 64, H - 22);
+  drawFooter(c, false, footLine, footText);
 }
 
 /* ══════════════ 렌더 ══════════════ */
