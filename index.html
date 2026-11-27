@@ -478,7 +478,7 @@
           <button class="chip" data-chip="T3.shape" data-value="ellipse">타원형 창</button>
           <button class="chip" data-chip="T3.shape" data-value="rect">사각형 창</button>
         </div>
-        <div class="field"><span class="note">관리전·관리후의 강조 창은 <b>각각 따로</b> 위치·배율·크기를 잡습니다. 창을 옮겨 턱끝·광대·볼·목선·이마 어디든 그 부위만 크게 보여줄 수 있습니다. 모양(타원/사각형)만 두 쪽에 함께 적용됩니다.</span></div>
+        <div class="field"><span class="note">관리전·관리후의 강조 창은 <b>각각 따로</b> 잡습니다. <b>창 위치</b>로 턱끝·광대·볼·목선·이마 어디든 옮기고, <b>창 안 사진</b>의 확대는 창 가운데 지점을 기준으로 커집니다(입술 위에 두고 확대해도 입술이 창 밖으로 밀리지 않음). 구도가 살짝 어긋나면 <b>창 안 사진 좌우/상하</b>로 사진만 미세하게 밀 수 있습니다.</span></div>
 
         <details class="adv" open>
           <summary>관리전 강조 (Before)</summary>
@@ -490,10 +490,14 @@
                 <button class="chip" data-preset="eb" data-value="mid">중앙</button>
               </div>
             </div>
-            <div class="rng"><label>확대</label><input type="range" min="1" max="5" step="0.01" data-bind="T3.eb.zoom" data-fmt="x"><output></output></div>
+            <div class="subhead">창 위치</div>
             <div class="rng"><label>좌우</label><input type="range" min="-300" max="300" step="1" data-bind="T3.eb.fx" data-fmt="px"><output></output></div>
             <div class="rng"><label>상하</label><input type="range" min="-700" max="700" step="1" data-bind="T3.eb.fy" data-fmt="px"><output></output></div>
-            <div class="rng"><label>크기</label><input type="range" min="0.6" max="1.6" step="0.01" data-bind="T3.eb.size" data-fmt="x"><output></output></div>
+            <div class="rng"><label>창 크기</label><input type="range" min="0.6" max="1.6" step="0.01" data-bind="T3.eb.size" data-fmt="x"><output></output></div>
+            <div class="subhead">창 안 사진</div>
+            <div class="rng"><label>확대</label><input type="range" min="1" max="5" step="0.01" data-bind="T3.eb.zoom" data-fmt="x"><output></output></div>
+            <div class="rng"><label>사진 좌우</label><input type="range" min="-400" max="400" step="1" data-bind="T3.eb.ox" data-fmt="px"><output></output></div>
+            <div class="rng"><label>사진 상하</label><input type="range" min="-400" max="400" step="1" data-bind="T3.eb.oy" data-fmt="px"><output></output></div>
             <div class="chip-row"><button class="chip" data-copy-emph="b">이 값을 관리후에 복사 →</button></div>
           </div>
         </details>
@@ -508,10 +512,14 @@
                 <button class="chip" data-preset="ea" data-value="mid">중앙</button>
               </div>
             </div>
-            <div class="rng"><label>확대</label><input type="range" min="1" max="5" step="0.01" data-bind="T3.ea.zoom" data-fmt="x"><output></output></div>
+            <div class="subhead">창 위치</div>
             <div class="rng"><label>좌우</label><input type="range" min="-300" max="300" step="1" data-bind="T3.ea.fx" data-fmt="px"><output></output></div>
             <div class="rng"><label>상하</label><input type="range" min="-700" max="700" step="1" data-bind="T3.ea.fy" data-fmt="px"><output></output></div>
-            <div class="rng"><label>크기</label><input type="range" min="0.6" max="1.6" step="0.01" data-bind="T3.ea.size" data-fmt="x"><output></output></div>
+            <div class="rng"><label>창 크기</label><input type="range" min="0.6" max="1.6" step="0.01" data-bind="T3.ea.size" data-fmt="x"><output></output></div>
+            <div class="subhead">창 안 사진</div>
+            <div class="rng"><label>확대</label><input type="range" min="1" max="5" step="0.01" data-bind="T3.ea.zoom" data-fmt="x"><output></output></div>
+            <div class="rng"><label>사진 좌우</label><input type="range" min="-400" max="400" step="1" data-bind="T3.ea.ox" data-fmt="px"><output></output></div>
+            <div class="rng"><label>사진 상하</label><input type="range" min="-400" max="400" step="1" data-bind="T3.ea.oy" data-fmt="px"><output></output></div>
             <div class="chip-row"><button class="chip" data-copy-emph="a">이 값을 관리전에 복사 →</button></div>
           </div>
         </details>
@@ -550,7 +558,7 @@
           2. <b>카드 비율</b>에서 1:1(1080×1080) 또는 4:5(1080×1350)를 고릅니다.<br>
           3. 각 칸의 <b>사진 선택</b>으로 전·후 사진을 넣습니다.<br>
           4. 칸을 눌러 <b>확대(최대 6배)·좌우·상하</b>를 맞춥니다. 가이드선에 눈과 턱을 기준으로 맞추면 편합니다.<br>
-          5. 2분할 부위 강조형은 <b>관리전·관리후 강조 창</b>을 각각 따로 옮겨 원하는 부위만 확대합니다.<br>
+          5. 2분할 부위 강조형은 <b>창 위치</b>로 부위를 잡고 <b>창 안 사진</b>으로 확대합니다(창은 전·후 따로).<br>
           6. 지사명과 문구를 고친 뒤 <b>PNG 저장</b>을 누릅니다.
         </span></div>
         <div class="field"><span class="note">문구·지사명은 이 브라우저에 자동 저장됩니다. 사진은 저장되지 않으니 새로고침하면 다시 넣어주세요.</span></div>
@@ -580,7 +588,7 @@ const DEFAULT = {
   T1:{eyebrow:'이로우라 안면비대칭 관리', t1:'턱선이 달라지면', t2:'얼굴의 중심이 달라집니다', pb:'관리전', pa:'관리 후'},
   T2:{title:'같은 조도, 같은 각도, 같은 렌즈', sum:'관리 전과 7회차, 크기만 맞춰 나란히 놓았습니다.\n각도와 조명은 동일하게 촬영했습니다.', bx:0, ba:0, by:0, ax:0, aa:0, ay:0, afterColor:'teal'},
   T3:{title:'하관의 무게가 빠지면 생기는 변화', shape:'ellipse', pb:'관리전', pa:'관리 후',
-      eb:{zoom:1.22, fx:0, fy:200, size:1}, ea:{zoom:1.22, fx:0, fy:200, size:1}},
+      eb:{zoom:1.22, fx:0, fy:200, size:1, ox:0, oy:0}, ea:{zoom:1.22, fx:0, fy:200, size:1, ox:0, oy:0}},
   T4:{title:'회차별 변화 기록', l1:'관리전', l2:'3회차', l3:'7회차', sum:'같은 조건에서 촬영한 원본을 크기만 맞췄습니다.'},
   T5:{title:'얼굴이 무거워 보이는 이유는\n따로 있습니다', callout:'하관 볼륨',
       lead:'턱선 아래 볼륨이 무너지면 얼굴 전체가 무거워 보입니다. 관리 후 가장 먼저 달라지는 지점입니다.',
@@ -684,6 +692,8 @@ function sanitize(st){
     st.T3[k].fx = clamp(st.T3[k].fx, -300, 300, 0);
     st.T3[k].fy = clamp(st.T3[k].fy, -700, 700, 0);
     st.T3[k].size = clamp(st.T3[k].size, 0.6, 1.6, 1);
+    st.T3[k].ox = clamp(st.T3[k].ox, -400, 400, 0);
+    st.T3[k].oy = clamp(st.T3[k].oy, -400, 400, 0);
   });
   if(st.T3.shape !== 'ellipse' && st.T3.shape !== 'rect') st.T3.shape = 'ellipse';
   if(st.ratio !== '4:5') st.ratio = '1:1';
@@ -1145,10 +1155,15 @@ function emphasisCrop(c, S, key, x, w){
   path();
   c.clip();
 
-  const base = Math.max(w/img.naturalWidth, H/img.naturalHeight) * (s.zoom || 1) * zoomFactor;
-  const dw = img.naturalWidth * base, dh = img.naturalHeight * base;
-  const dx = x + (w - dw)/2 + (s.x || 0);
-  const dy = (H - dh)/2 + (s.y || 0);
+  // 강조 창은 슬롯 사진을 그대로 쓰되, 창 중심을 기준점으로 확대한다.
+  // (확대 배율을 올려도 창 한가운데의 사진 지점이 제자리에 남는다)
+  const baseScale = Math.max(w/img.naturalWidth, H/img.naturalHeight) * (s.zoom || 1);
+  const dw0 = img.naturalWidth * baseScale, dh0 = img.naturalHeight * baseScale;
+  const dx0 = x + (w - dw0)/2 + (s.x || 0);
+  const dy0 = (H - dh0)/2 + (s.y || 0);
+  const dw = dw0 * zoomFactor, dh = dh0 * zoomFactor;
+  const dx = cx + (dx0 - cx) * zoomFactor + (e.ox || 0);
+  const dy = cy + (dy0 - cy) * zoomFactor + (e.oy || 0);
   c.filter = 'saturate(1.06) contrast(1.04)';
   c.drawImage(img, dx, dy, dw, dh);
   c.filter = 'none';
