@@ -198,7 +198,8 @@
   .slot.sel .slot-body{display:flex}
 
   .rng{display:grid;grid-template-columns:52px 1fr 46px;align-items:center;gap:8px}
-  .rng label{font-size:11px;color:#7A7F7A;font-weight:500}
+  .rng.wide{grid-template-columns:70px 1fr 46px}
+  .rng label{font-size:11px;color:#7A7F7A;font-weight:500;white-space:nowrap}
   .rng output{font-size:10.5px;color:var(--teal);font-weight:700;text-align:right;font-variant-numeric:tabular-nums}
   input[type=range]{
     -webkit-appearance:none;appearance:none;width:100%;height:22px;background:transparent;margin:0;
@@ -478,7 +479,7 @@
           <button class="chip" data-chip="T3.shape" data-value="ellipse">타원형 창</button>
           <button class="chip" data-chip="T3.shape" data-value="rect">사각형 창</button>
         </div>
-        <div class="field"><span class="note">관리전·관리후의 강조 창은 <b>각각 따로</b> 잡습니다. <b>창 위치</b>로 턱끝·광대·볼·목선·이마 어디든 옮기고, <b>창 안 사진</b>의 확대는 창 가운데 지점을 기준으로 커집니다(입술 위에 두고 확대해도 입술이 창 밖으로 밀리지 않음). 구도가 살짝 어긋나면 <b>창 안 사진 좌우/상하</b>로 사진만 미세하게 밀 수 있습니다.</span></div>
+        <div class="field"><span class="note">관리전·관리후의 강조 창은 <b>각각 따로</b> 잡습니다. <b>창 위치</b>로 턱끝·광대·볼·목선·이마 어디든 옮기고, <b>창 크기</b>는 <b>가로 폭</b>과 <b>세로 높이</b>를 따로 조절합니다(눈매는 가로로 넓고 세로로 납작하게). <b>창 안 사진</b>의 확대는 창 가운데 지점을 기준으로 커집니다(입술 위에 두고 확대해도 입술이 창 밖으로 밀리지 않음). 구도가 살짝 어긋나면 <b>창 안 사진 좌우/상하</b>로 사진만 미세하게 밀 수 있습니다.</span></div>
 
         <details class="adv" open>
           <summary>관리전 강조 (Before)</summary>
@@ -493,7 +494,9 @@
             <div class="subhead">창 위치</div>
             <div class="rng"><label>좌우</label><input type="range" min="-300" max="300" step="1" data-bind="T3.eb.fx" data-fmt="px"><output></output></div>
             <div class="rng"><label>상하</label><input type="range" min="-700" max="700" step="1" data-bind="T3.eb.fy" data-fmt="px"><output></output></div>
-            <div class="rng"><label>창 크기</label><input type="range" min="0.6" max="1.6" step="0.01" data-bind="T3.eb.size" data-fmt="x"><output></output></div>
+            <div class="subhead">창 크기 · 가로와 세로를 따로</div>
+            <div class="rng wide"><label>가로 폭</label><input type="range" min="0.50" max="1.90" step="0.01" data-bind="T3.eb.w" data-fmt="x"><output></output></div>
+            <div class="rng wide"><label>세로 높이</label><input type="range" min="0.35" max="1.80" step="0.01" data-bind="T3.eb.h" data-fmt="x"><output></output></div>
             <div class="subhead">창 안 사진</div>
             <div class="rng"><label>확대</label><input type="range" min="1" max="5" step="0.01" data-bind="T3.eb.zoom" data-fmt="x"><output></output></div>
             <div class="rng"><label>사진 좌우</label><input type="range" min="-400" max="400" step="1" data-bind="T3.eb.ox" data-fmt="px"><output></output></div>
@@ -515,7 +518,9 @@
             <div class="subhead">창 위치</div>
             <div class="rng"><label>좌우</label><input type="range" min="-300" max="300" step="1" data-bind="T3.ea.fx" data-fmt="px"><output></output></div>
             <div class="rng"><label>상하</label><input type="range" min="-700" max="700" step="1" data-bind="T3.ea.fy" data-fmt="px"><output></output></div>
-            <div class="rng"><label>창 크기</label><input type="range" min="0.6" max="1.6" step="0.01" data-bind="T3.ea.size" data-fmt="x"><output></output></div>
+            <div class="subhead">창 크기 · 가로와 세로를 따로</div>
+            <div class="rng wide"><label>가로 폭</label><input type="range" min="0.50" max="1.90" step="0.01" data-bind="T3.ea.w" data-fmt="x"><output></output></div>
+            <div class="rng wide"><label>세로 높이</label><input type="range" min="0.35" max="1.80" step="0.01" data-bind="T3.ea.h" data-fmt="x"><output></output></div>
             <div class="subhead">창 안 사진</div>
             <div class="rng"><label>확대</label><input type="range" min="1" max="5" step="0.01" data-bind="T3.ea.zoom" data-fmt="x"><output></output></div>
             <div class="rng"><label>사진 좌우</label><input type="range" min="-400" max="400" step="1" data-bind="T3.ea.ox" data-fmt="px"><output></output></div>
@@ -588,7 +593,7 @@ const DEFAULT = {
   T1:{eyebrow:'이로우라 안면비대칭 관리', t1:'턱선이 달라지면', t2:'얼굴의 중심이 달라집니다', pb:'관리전', pa:'관리 후'},
   T2:{title:'같은 조도, 같은 각도, 같은 렌즈', sum:'관리 전과 7회차, 크기만 맞춰 나란히 놓았습니다.\n각도와 조명은 동일하게 촬영했습니다.', bx:0, ba:0, by:0, ax:0, aa:0, ay:0, afterColor:'teal'},
   T3:{title:'하관의 무게가 빠지면 생기는 변화', shape:'ellipse', pb:'관리전', pa:'관리 후',
-      eb:{zoom:1.22, fx:0, fy:200, size:1, ox:0, oy:0}, ea:{zoom:1.22, fx:0, fy:200, size:1, ox:0, oy:0}},
+      eb:{zoom:1.22, fx:0, fy:200, w:1, h:1, ox:0, oy:0}, ea:{zoom:1.22, fx:0, fy:200, w:1, h:1, ox:0, oy:0}},
   T4:{title:'회차별 변화 기록', l1:'관리전', l2:'3회차', l3:'7회차', sum:'같은 조건에서 촬영한 원본을 크기만 맞췄습니다.'},
   T5:{title:'얼굴이 무거워 보이는 이유는\n따로 있습니다', callout:'하관 볼륨',
       lead:'턱선 아래 볼륨이 무너지면 얼굴 전체가 무거워 보입니다. 관리 후 가장 먼저 달라지는 지점입니다.',
@@ -651,14 +656,26 @@ function migrate(saved){
   if(!saved || typeof saved !== 'object') return;
   const t3 = saved.T3;
   if(t3 && typeof t3 === 'object'){
+    const num = (v, d)=> (typeof v === 'number' && isFinite(v)) ? v : d;
     const hasLegacy = ['zoom','fx','fy','size'].some(k=> k in t3);
     if(hasLegacy && (!t3.eb || !t3.ea)){
-      const num = (v, d)=> (typeof v === 'number' && isFinite(v)) ? v : d;
-      const v = {zoom:num(t3.zoom, 1.22), fx:num(t3.fx, 0), fy:num(t3.fy, 0), size:num(t3.size, 1)};
+      const sz = num(t3.size, 1);
+      const v = {zoom:num(t3.zoom, 1.22), fx:num(t3.fx, 0), fy:num(t3.fy, 0), w:sz, h:sz};
       if(!t3.eb) t3.eb = Object.assign({}, v);
       if(!t3.ea) t3.ea = Object.assign({}, v);
     }
     delete t3.zoom; delete t3.fx; delete t3.fy; delete t3.size;
+
+    // 창 크기 단일값(size) → 가로 폭(w) · 세로 높이(h)로 나눈다(기존 사용자의 저장값 보존)
+    ['eb','ea'].forEach(k=>{
+      const s = t3[k];
+      if(s && typeof s === 'object' && 'size' in s){
+        const sz = num(s.size, 1);
+        if(!('w' in s)) s.w = sz;
+        if(!('h' in s)) s.h = sz;
+        delete s.size;
+      }
+    });
 
     // 고정 부위 모드(chin/eye) → 자유 위치 모드(ellipse/rect)로 이동량 보정
     if(t3.shape === 'chin' || t3.shape === 'eye'){
@@ -691,7 +708,8 @@ function sanitize(st){
     st.T3[k].zoom = clamp(st.T3[k].zoom, 1, 5, 1.22);
     st.T3[k].fx = clamp(st.T3[k].fx, -300, 300, 0);
     st.T3[k].fy = clamp(st.T3[k].fy, -700, 700, 0);
-    st.T3[k].size = clamp(st.T3[k].size, 0.6, 1.6, 1);
+    st.T3[k].w = clamp(st.T3[k].w, 0.50, 1.90, 1);
+    st.T3[k].h = clamp(st.T3[k].h, 0.35, 1.80, 1);
     st.T3[k].ox = clamp(st.T3[k].ox, -400, 400, 0);
     st.T3[k].oy = clamp(st.T3[k].oy, -400, 400, 0);
   });
@@ -1126,14 +1144,15 @@ function emphasisCrop(c, S, key, x, w){
   const s = state.tr[key] || {zoom:1,x:0,y:0};
   const e = (key === 'b' ? S.eb : S.ea) || {};   // 관리전·관리후 각각의 강조 설정
   const zoomFactor = (e.zoom || 1);
-  const sizeMul = (e.size || 1);
+  const wMul = (typeof e.w === 'number' && isFinite(e.w)) ? e.w : (typeof e.size === 'number' && isFinite(e.size) ? e.size : 1);
+  const hMul = (typeof e.h === 'number' && isFinite(e.h)) ? e.h : (typeof e.size === 'number' && isFinite(e.size) ? e.size : 1);
   const isRect = S.shape === 'rect';
 
   // 화면 중심을 기준으로 자유롭게 옮기는 강조 창 (fx 좌우, fy 상하)
   const cx = x + w/2 + (e.fx || 0);
   const cy = H/2 + (e.fy || 0);
-  const rx = (isRect ? w*0.23 : w*0.245) * sizeMul;
-  const ry = (isRect ? H*0.085 : H*0.138) * sizeMul;
+  const rx = (isRect ? w*0.23 : w*0.245) * wMul;
+  const ry = (isRect ? H*0.085 : H*0.138) * hMul;
   const rad = isRect ? Math.min(rx, ry)*0.22 : 0;
 
   const path = ()=>{
@@ -1520,14 +1539,22 @@ document.querySelectorAll('[data-copy-emph]').forEach(btn=>{
 document.querySelectorAll('[data-preset]').forEach(btn=>{
   btn.addEventListener('click', ()=>{
     const side = btn.dataset.preset;
-    if(!state.T3[side]) state.T3[side] = {zoom:1.22, fx:0, fy:0, size:1};
+    if(!state.T3[side]) state.T3[side] = {zoom:1.22, fx:0, fy:0, w:1, h:1, ox:0, oy:0};
     const t = state.T3[side];
     const v = btn.dataset.value;
     t.fx = 0;
-    t.fy = v === 'chin' ? Math.round(H*0.185) : v === 'eye' ? -Math.round(H*0.10) : 0;
+    if(v === 'eye'){                       // 두 눈 + 미간이 한 번에 들어오는 납작한 가로 밴드
+      t.fy = -Math.round(H*0.10); t.w = 1.50; t.h = 0.55;
+    } else if(v === 'chin'){               // 턱선·하관을 넓게 담는 가로 창
+      t.fy = Math.round(H*0.185); t.w = 1.20; t.h = 1.00;
+    } else {                               // 중앙 기본값
+      t.fy = 0; t.w = 1.00; t.h = 1.00;
+    }
     applyStateToInputs();
     saveState(); render();
-    toast(v === 'chin' ? '강조 창을 하관으로 옮겼습니다' : v === 'eye' ? '강조 창을 눈매로 옮겼습니다' : '강조 창을 가운데로 옮겼습니다');
+    toast(v === 'chin' ? '하관 창 · 가로 1.20× / 세로 1.00×'
+        : v === 'eye' ? '눈매 창 · 가로 1.50× / 세로 0.55×'
+        : '가운데 창 · 가로 1.00× / 세로 1.00×');
   });
 });
 
