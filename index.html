@@ -101,6 +101,7 @@
     padding:18px;box-shadow:0 1px 2px rgba(34,37,36,.03);
   }
   .canvas-wrap{position:relative;width:100%;max-width:720px;margin:0 auto}
+  .canvas-wrap.r45{max-width:560px}
   #cv{
     display:block;width:100%;height:auto;aspect-ratio:1/1;
     border-radius:10px;background:var(--ivory);
@@ -256,6 +257,7 @@
     }
     .stage-card{padding:10px;border-radius:14px}
     .canvas-wrap{max-width:min(100%, 420px)}
+    .canvas-wrap.r45{max-width:min(100%, 336px)}
     .tabs-wrap{top:61px}
     .tabs{padding:8px 14px}
     .panel{padding-bottom:80px}
@@ -278,6 +280,7 @@
     }
     .stage-card{padding:8px;border-radius:12px;box-shadow:none}
     .canvas-wrap{max-width:min(100%, 300px)}
+    .canvas-wrap.r45{max-width:min(100%, 240px)}
     .badge{display:none}
     .stage-hint{display:none}
     .panel{padding-bottom:60px}
@@ -319,6 +322,17 @@
   </section>
 
   <aside class="panel">
+
+    <section class="sec">
+      <div class="sec-head"><h2>카드 비율</h2><span class="hint" id="ratioHint">저장 해상도</span></div>
+      <div class="sec-body">
+        <div class="chip-row">
+          <button class="chip" data-ratio="1:1">1:1 · 1080×1080</button>
+          <button class="chip" data-ratio="4:5">4:5 · 1080×1350</button>
+        </div>
+        <div class="field"><span class="note">4:5는 인스타그램 피드 세로 비율입니다. 고르면 사진 영역이 세로로 더 넓게 잡히고, 저장 파일도 1080×1350으로 나옵니다.</span></div>
+      </div>
+    </section>
 
     <section class="sec">
       <div class="sec-head"><h2>브랜드 표기</h2><span class="hint">자동 저장됨</span></div>
@@ -461,17 +475,24 @@
       <div class="sec-head"><h2>부위 강조</h2><span class="hint">T3 전용 · 전후 따로</span></div>
       <div class="sec-body tight">
         <div class="chip-row">
-          <button class="chip" data-chip="T3.shape" data-value="chin">하관·턱선 타원</button>
-          <button class="chip" data-chip="T3.shape" data-value="eye">눈매 직사각형</button>
+          <button class="chip" data-chip="T3.shape" data-value="ellipse">타원형 창</button>
+          <button class="chip" data-chip="T3.shape" data-value="rect">사각형 창</button>
         </div>
-        <div class="field"><span class="note">관리전과 관리후의 강조 영역은 <b>각각 따로</b> 위치·배율·크기를 잡습니다. 모양(타원/직사각형)만 두 쪽에 함께 적용됩니다.</span></div>
+        <div class="field"><span class="note">관리전·관리후의 강조 창은 <b>각각 따로</b> 위치·배율·크기를 잡습니다. 창을 옮겨 턱끝·광대·볼·목선·이마 어디든 그 부위만 크게 보여줄 수 있습니다. 모양(타원/사각형)만 두 쪽에 함께 적용됩니다.</span></div>
 
         <details class="adv" open>
           <summary>관리전 강조 (Before)</summary>
           <div class="adv-body">
+            <div class="field" style="gap:5px"><label>빠른 위치</label>
+              <div class="chip-row">
+                <button class="chip" data-preset="eb" data-value="chin">하관 위치</button>
+                <button class="chip" data-preset="eb" data-value="eye">눈매 위치</button>
+                <button class="chip" data-preset="eb" data-value="mid">중앙</button>
+              </div>
+            </div>
             <div class="rng"><label>확대</label><input type="range" min="1" max="5" step="0.01" data-bind="T3.eb.zoom" data-fmt="x"><output></output></div>
-            <div class="rng"><label>좌우</label><input type="range" min="-400" max="400" step="1" data-bind="T3.eb.fx" data-fmt="px"><output></output></div>
-            <div class="rng"><label>상하</label><input type="range" min="-400" max="400" step="1" data-bind="T3.eb.fy" data-fmt="px"><output></output></div>
+            <div class="rng"><label>좌우</label><input type="range" min="-300" max="300" step="1" data-bind="T3.eb.fx" data-fmt="px"><output></output></div>
+            <div class="rng"><label>상하</label><input type="range" min="-700" max="700" step="1" data-bind="T3.eb.fy" data-fmt="px"><output></output></div>
             <div class="rng"><label>크기</label><input type="range" min="0.6" max="1.6" step="0.01" data-bind="T3.eb.size" data-fmt="x"><output></output></div>
             <div class="chip-row"><button class="chip" data-copy-emph="b">이 값을 관리후에 복사 →</button></div>
           </div>
@@ -480,9 +501,16 @@
         <details class="adv" open>
           <summary>관리후 강조 (After)</summary>
           <div class="adv-body">
+            <div class="field" style="gap:5px"><label>빠른 위치</label>
+              <div class="chip-row">
+                <button class="chip" data-preset="ea" data-value="chin">하관 위치</button>
+                <button class="chip" data-preset="ea" data-value="eye">눈매 위치</button>
+                <button class="chip" data-preset="ea" data-value="mid">중앙</button>
+              </div>
+            </div>
             <div class="rng"><label>확대</label><input type="range" min="1" max="5" step="0.01" data-bind="T3.ea.zoom" data-fmt="x"><output></output></div>
-            <div class="rng"><label>좌우</label><input type="range" min="-400" max="400" step="1" data-bind="T3.ea.fx" data-fmt="px"><output></output></div>
-            <div class="rng"><label>상하</label><input type="range" min="-400" max="400" step="1" data-bind="T3.ea.fy" data-fmt="px"><output></output></div>
+            <div class="rng"><label>좌우</label><input type="range" min="-300" max="300" step="1" data-bind="T3.ea.fx" data-fmt="px"><output></output></div>
+            <div class="rng"><label>상하</label><input type="range" min="-700" max="700" step="1" data-bind="T3.ea.fy" data-fmt="px"><output></output></div>
             <div class="rng"><label>크기</label><input type="range" min="0.6" max="1.6" step="0.01" data-bind="T3.ea.size" data-fmt="x"><output></output></div>
             <div class="chip-row"><button class="chip" data-copy-emph="a">이 값을 관리전에 복사 →</button></div>
           </div>
@@ -519,10 +547,11 @@
       <div class="sec-body" style="gap:9px">
         <div class="field"><span class="note">
           1. 위에서 템플릿을 고릅니다.<br>
-          2. 각 칸의 <b>사진 선택</b>으로 전·후 사진을 넣습니다.<br>
-          3. 칸을 눌러 <b>확대(최대 6배)·좌우·상하</b>를 맞춥니다. 가이드선에 눈과 턱을 기준으로 맞추면 편합니다.<br>
-          4. 2분할 부위 강조형은 <b>관리전·관리후 강조 영역</b>을 각각 따로 잡습니다.<br>
-          5. 지사명과 문구를 고친 뒤 <b>1080×1080 PNG 저장</b>을 누릅니다.
+          2. <b>카드 비율</b>에서 1:1(1080×1080) 또는 4:5(1080×1350)를 고릅니다.<br>
+          3. 각 칸의 <b>사진 선택</b>으로 전·후 사진을 넣습니다.<br>
+          4. 칸을 눌러 <b>확대(최대 6배)·좌우·상하</b>를 맞춥니다. 가이드선에 눈과 턱을 기준으로 맞추면 편합니다.<br>
+          5. 2분할 부위 강조형은 <b>관리전·관리후 강조 창</b>을 각각 따로 옮겨 원하는 부위만 확대합니다.<br>
+          6. 지사명과 문구를 고친 뒤 <b>PNG 저장</b>을 누릅니다.
         </span></div>
         <div class="field"><span class="note">문구·지사명은 이 브라우저에 자동 저장됩니다. 사진은 저장되지 않으니 새로고침하면 다시 넣어주세요.</span></div>
       </div>
@@ -541,6 +570,7 @@
 /* ══════════════ 기본값 ══════════════ */
 const DEFAULT = {
   template:'T1',
+  ratio:'1:1',
   branch:'ILOURA · 이로우라',
   sub:'안면비대칭 · 정면',
   watermark:true,
@@ -549,8 +579,8 @@ const DEFAULT = {
   trust:'이로우라는 사진·각도·크기 차이로 눈속임 하지 않습니다. 정확한 판독을 위해 크기만 맞춘 원본 이미지입니다.',
   T1:{eyebrow:'이로우라 안면비대칭 관리', t1:'턱선이 달라지면', t2:'얼굴의 중심이 달라집니다', pb:'관리전', pa:'관리 후'},
   T2:{title:'같은 조도, 같은 각도, 같은 렌즈', sum:'관리 전과 7회차, 크기만 맞춰 나란히 놓았습니다.\n각도와 조명은 동일하게 촬영했습니다.', bx:0, ba:0, by:0, ax:0, aa:0, ay:0, afterColor:'teal'},
-  T3:{title:'하관의 무게가 빠지면 생기는 변화', shape:'chin', pb:'관리전', pa:'관리 후',
-      eb:{zoom:1.22, fx:0, fy:0, size:1}, ea:{zoom:1.22, fx:0, fy:0, size:1}},
+  T3:{title:'하관의 무게가 빠지면 생기는 변화', shape:'ellipse', pb:'관리전', pa:'관리 후',
+      eb:{zoom:1.22, fx:0, fy:200, size:1}, ea:{zoom:1.22, fx:0, fy:200, size:1}},
   T4:{title:'회차별 변화 기록', l1:'관리전', l2:'3회차', l3:'7회차', sum:'같은 조건에서 촬영한 원본을 크기만 맞췄습니다.'},
   T5:{title:'얼굴이 무거워 보이는 이유는\n따로 있습니다', callout:'하관 볼륨',
       lead:'턱선 아래 볼륨이 무너지면 얼굴 전체가 무거워 보입니다. 관리 후 가장 먼저 달라지는 지점입니다.',
@@ -577,7 +607,8 @@ const SLOT_META = {
   T5:[{k:'main',n:'메인 사진',s:'원형 크롭'}]
 };
 
-const W = 1080, H = 1080;
+const BASE_W = 1080;
+let W = 1080, H = 1080;   // 카드 비율에 따라 render()에서 바뀐다 (1:1 1080×1080 · 4:5 1080×1350)
 const C = {ivory:'#F9F8F5', line:'#E5E2DC', ink:'#222524', teal:'#1D5450', tealSoft:'#2A6A64',
            terra:'#9D4B37', muted:'#8B8F8A', paper:'#FFFFFF'};
 const FONT = 'Pretendard, "Noto Sans KR", "Apple SD Gothic Neo", "Malgun Gothic", system-ui, sans-serif';
@@ -607,7 +638,7 @@ function loadState(){
   return base;
 }
 
-/* 예전 저장값(전후 공용 T3.zoom·fx·fy·size)을 전후 개별 설정으로 옮긴다 */
+/* 예전 저장값을 현재 구조로 옮긴다(전후 공용 T3 값, 고정 부위 모드) */
 function migrate(saved){
   if(!saved || typeof saved !== 'object') return;
   const t3 = saved.T3;
@@ -620,6 +651,16 @@ function migrate(saved){
       if(!t3.ea) t3.ea = Object.assign({}, v);
     }
     delete t3.zoom; delete t3.fx; delete t3.fy; delete t3.size;
+
+    // 고정 부위 모드(chin/eye) → 자유 위치 모드(ellipse/rect)로 이동량 보정
+    if(t3.shape === 'chin' || t3.shape === 'eye'){
+      const H0 = saved.ratio === '4:5' ? 1350 : 1080;
+      const shift = t3.shape === 'chin' ? Math.round(H0*0.185) : -Math.round(H0*0.10);
+      t3.shape = t3.shape === 'eye' ? 'rect' : 'ellipse';
+      ['eb','ea'].forEach(k=>{
+        if(t3[k] && typeof t3[k] === 'object') t3[k].fy = (Number(t3[k].fy) || 0) + shift;
+      });
+    }
   }
 }
 
@@ -640,11 +681,12 @@ function sanitize(st){
   ['eb','ea'].forEach(k=>{
     if(!st.T3[k] || typeof st.T3[k] !== 'object') st.T3[k] = {};
     st.T3[k].zoom = clamp(st.T3[k].zoom, 1, 5, 1.22);
-    st.T3[k].fx = clamp(st.T3[k].fx, -400, 400, 0);
-    st.T3[k].fy = clamp(st.T3[k].fy, -400, 400, 0);
+    st.T3[k].fx = clamp(st.T3[k].fx, -300, 300, 0);
+    st.T3[k].fy = clamp(st.T3[k].fy, -700, 700, 0);
     st.T3[k].size = clamp(st.T3[k].size, 0.6, 1.6, 1);
   });
-  if(st.T3.shape !== 'eye' && st.T3.shape !== 'chin') st.T3.shape = 'chin';
+  if(st.T3.shape !== 'ellipse' && st.T3.shape !== 'rect') st.T3.shape = 'ellipse';
+  if(st.ratio !== '4:5') st.ratio = '1:1';
 }
 function merge(dst, src){
   for(const k in src){
@@ -920,7 +962,10 @@ function drawGuides(c, x, y, w, h, round){
 /* ══════════════ T1 썸네일 요약형 ══════════════ */
 function drawT1(c, S){
   const M = 72, IW = 456, GAP = 24;
+  const EX = H - 1080;
+  const IH = Math.round(IW + EX*0.45);                  // 1:1 456 · 4:5 578
   const titleTop = state.trustOn ? 196 : 168;
+  const imgY = titleTop + 232 + Math.round(EX*0.45);    // 1:1 428 · 4:5 549
   drawTrust(c, false);
 
   c.save();
@@ -932,38 +977,40 @@ function drawT1(c, S){
   c.fillText(cut(c, S.t2, 936), M, titleTop + 158);
   c.restore();
 
-  const imgY = titleTop + 232;
-  drawSlot(c, 'b', M, imgY, IW, IW, {radius:6, tone:'b', stroke:'rgba(34,37,36,.06)'});
-  drawSlot(c, 'a', M + IW + GAP, imgY, IW, IW, {radius:6, tone:'a', stroke:'rgba(29,84,80,.16)'});
-  drawGuides(c, M, imgY, IW, IW);
-  drawGuides(c, M + IW + GAP, imgY, IW, IW);
+  const imgBottom = imgY + IH;
+  drawSlot(c, 'b', M, imgY, IW, IH, {radius:6, tone:'b', stroke:'rgba(34,37,36,.06)'});
+  drawSlot(c, 'a', M + IW + GAP, imgY, IW, IH, {radius:6, tone:'a', stroke:'rgba(29,84,80,.16)'});
+  drawGuides(c, M, imgY, IW, IH);
+  drawGuides(c, M + IW + GAP, imgY, IW, IH);
 
   pill(c, S.pb || '관리전', M + 16, imgY + 16, C.terra, '#FBF7F4', 20, IW - 32);
   pill(c, S.pa || '관리 후', M + IW + GAP + 16, imgY + 16, C.teal, '#F6F4EF', 20, IW - 32);
 
-  drawFooter(c, false, imgY + IW + 40, imgY + IW + 94);
+  drawFooter(c, false, imgBottom + 40, imgBottom + 94);
 }
 
 /* ══════════════ T2 2분할 축 비교형 ══════════════ */
 function drawT2(c, S){
   const M = 72, IW = 456, GAP = 24;
+  const EX = H - 1080;
+  const IH = Math.round(IW + EX*0.70);                  // 1:1 456 · 4:5 645
   drawTrust(c, false);
 
   c.save();
   c.font = '600 27px ' + FONT; c.fillStyle = C.teal; c.textAlign = 'center';
-  c.fillText(cut(c, S.title || '', 860), W/2, state.trustOn ? 160 : 118);
+  c.fillText(cut(c, S.title || '', 860), W/2, (state.trustOn ? 160 : 118) + Math.round(EX*0.04));
   c.restore();
 
-  const imgY = state.trustOn ? 228 : 186;
-  drawSlot(c, 'b', M, imgY, IW, IW, {radius:4, tone:'b', stroke:'rgba(34,37,36,.06)'});
-  drawSlot(c, 'a', M + IW + GAP, imgY, IW, IW, {radius:4, tone:'a', stroke:'rgba(29,84,80,.16)'});
-  drawGuides(c, M, imgY, IW, IW);
-  drawGuides(c, M + IW + GAP, imgY, IW, IW);
+  const imgY = (state.trustOn ? 228 : 186) + Math.round(EX*0.15);
+  drawSlot(c, 'b', M, imgY, IW, IH, {radius:4, tone:'b', stroke:'rgba(34,37,36,.06)'});
+  drawSlot(c, 'a', M + IW + GAP, imgY, IW, IH, {radius:4, tone:'a', stroke:'rgba(29,84,80,.16)'});
+  drawGuides(c, M, imgY, IW, IH);
+  drawGuides(c, M + IW + GAP, imgY, IW, IH);
 
   // 축 오버레이
-  axisOverlay(c, M, imgY, IW, {x:S.bx, a:S.ba, y:S.by}, C.terra, false);
+  axisOverlay(c, M, imgY, IW, IH, {x:S.bx, a:S.ba, y:S.by}, C.terra);
   const afterColor = S.afterColor === 'white' ? 'rgba(255,255,255,.95)' : C.teal;
-  axisOverlay(c, M + IW + GAP, imgY, IW, {x:S.ax, a:S.aa, y:S.ay}, afterColor, true);
+  axisOverlay(c, M + IW + GAP, imgY, IW, IH, {x:S.ax, a:S.aa, y:S.ay}, afterColor);
 
   pill(c, 'BEFORE', M + 16, imgY + 16, C.terra, '#FBF7F4', 18, 200);
   pill(c, 'AFTER', M + IW + GAP + 16, imgY + 16,
@@ -974,36 +1021,37 @@ function drawT2(c, S){
   c.save();
   c.font = '500 28px ' + FONT; c.fillStyle = '#4B514D'; c.textAlign = 'center';
   const lines = wrap(c, S.sum || '', 840).slice(0,2);
-  const baseY = imgY + IW + 78;
+  const baseY = imgY + IH + 78;
   lines.forEach((l,i)=> c.fillText(l, W/2, baseY + i*40));
   c.restore();
 
-  drawFooter(c, false, 952, 1002);
+  drawFooter(c, false, H - 128, H - 78);
 }
 
-function axisOverlay(c, x, y, s, o, color, isAfter){
-  const cx = x + s/2 + (o.x || 0);
-  const cy = y + s/2;
+function axisOverlay(c, x, y, w, h, o, color){
+  const s = Math.min(w, h);
+  const cx = x + w/2 + (o.x || 0);
+  const cy = y + h/2;
   const ang = (o.a || 0) * Math.PI / 180;
   c.save();
-  c.beginPath(); c.rect(x,y,s,s); c.clip();
+  c.beginPath(); c.rect(x,y,w,h); c.clip();
   c.translate(cx, cy); c.rotate(ang);
 
   c.shadowColor = 'rgba(0,0,0,.28)'; c.shadowBlur = 8;
 
   // 세로축
   c.strokeStyle = color; c.lineWidth = 4; c.lineCap = 'round';
-  c.beginPath(); c.moveTo(0, -s*0.46); c.lineTo(0, s*0.46); c.stroke();
+  c.beginPath(); c.moveTo(0, -h*0.46); c.lineTo(0, h*0.46); c.stroke();
 
   // 수평선
   const hy = o.y || 0;
   c.lineWidth = 2.4;
   c.setLineDash([0,0]);
-  c.beginPath(); c.moveTo(-s*0.43, hy); c.lineTo(s*0.43, hy); c.stroke();
+  c.beginPath(); c.moveTo(-w*0.43, hy); c.lineTo(w*0.43, hy); c.stroke();
 
   // 화살표 머리 (수평선 오른쪽)
   c.beginPath();
-  c.moveTo(s*0.43, hy); c.lineTo(s*0.43 - 14, hy - 8); c.lineTo(s*0.43 - 14, hy + 8);
+  c.moveTo(w*0.43, hy); c.lineTo(w*0.43 - 14, hy - 8); c.lineTo(w*0.43 - 14, hy + 8);
   c.closePath(); c.fillStyle = color; c.fill();
 
   // 중심 마커
@@ -1047,18 +1095,19 @@ function drawT3(c, S){
   pill(c, S.pa || '관리 후', halfW + 6 + 34, 150, 'rgba(249,248,245,.94)', C.teal, 20, 420);
 
   // 하단 스크림
-  const gb = c.createLinearGradient(0,700,0,H);
+  const scrimTop = Math.round(H*0.648);
+  const gb = c.createLinearGradient(0,scrimTop,0,H);
   gb.addColorStop(0,'rgba(10,15,14,0)'); gb.addColorStop(.55,'rgba(10,15,14,.62)'); gb.addColorStop(1,'rgba(10,15,14,.86)');
-  c.fillStyle = gb; c.fillRect(0,700,W,H-700);
+  c.fillStyle = gb; c.fillRect(0,scrimTop,W,H-scrimTop);
 
   c.save();
   c.font = '700 44px ' + FONT; c.fillStyle = '#F9F8F5'; c.textAlign = 'left';
   const lines = wrap(c, S.title || '', 880).slice(0,2);
-  const first = lines.length > 1 ? 838 : 896;
+  const first = H - (lines.length > 1 ? 242 : 184);
   lines.forEach((l,i)=> c.fillText(l, 72, first + i*56));
   c.restore();
 
-  drawFooter(c, true, 990, 1034);
+  drawFooter(c, true, H - 90, H - 46);
   // 하단 여백 안에 푸터가 겹치지 않도록 스크림 위에 다시 그린 것
 }
 
@@ -1068,24 +1117,24 @@ function emphasisCrop(c, S, key, x, w){
   const e = (key === 'b' ? S.eb : S.ea) || {};   // 관리전·관리후 각각의 강조 설정
   const zoomFactor = (e.zoom || 1);
   const sizeMul = (e.size || 1);
+  const isRect = S.shape === 'rect';
 
-  let cx = x + w/2 + (e.fx || 0);
-  let cy, rx, ry, rect = null;
-  if(S.shape === 'eye'){
-    cy = H*0.40 + (e.fy || 0);
-    rx = w*0.24*sizeMul; ry = H*0.085*sizeMul;
-    rect = {x:cx-rx, y:cy-ry, w:rx*2, h:ry*2};
-  } else {
-    cy = H*0.685 + (e.fy || 0);
-    rx = w*0.245*sizeMul; ry = H*0.138*sizeMul;
-  }
+  // 화면 중심을 기준으로 자유롭게 옮기는 강조 창 (fx 좌우, fy 상하)
+  const cx = x + w/2 + (e.fx || 0);
+  const cy = H/2 + (e.fy || 0);
+  const rx = (isRect ? w*0.23 : w*0.245) * sizeMul;
+  const ry = (isRect ? H*0.085 : H*0.138) * sizeMul;
+  const rad = isRect ? Math.min(rx, ry)*0.22 : 0;
+
+  const path = ()=>{
+    if(isRect) rr(c, cx-rx, cy-ry, rx*2, ry*2, rad);
+    else { c.beginPath(); c.ellipse(cx, cy, rx, ry, 0, 0, Math.PI*2); }
+  };
 
   if(!img){
-    // 사진이 없을 때는 강조 영역 위치만 보여줌
+    // 사진이 없을 때는 강조 창 위치만 보여줌
     c.save();
-    c.beginPath();
-    if(S.shape === 'eye') c.rect(rect.x, rect.y, rect.w, rect.h);
-    else c.ellipse(cx, cy, rx, ry, 0, 0, Math.PI*2);
+    path();
     c.fillStyle = 'rgba(255,255,255,.16)'; c.fill();
     c.setLineDash([10,8]); c.strokeStyle = 'rgba(157,75,55,.4)'; c.lineWidth = 2; c.stroke();
     c.restore();
@@ -1093,9 +1142,7 @@ function emphasisCrop(c, S, key, x, w){
   }
 
   c.save();
-  c.beginPath();
-  if(S.shape === 'eye') c.rect(rect.x, rect.y, rect.w, rect.h);
-  else c.ellipse(cx, cy, rx, ry, 0, 0, Math.PI*2);
+  path();
   c.clip();
 
   const base = Math.max(w/img.naturalWidth, H/img.naturalHeight) * (s.zoom || 1) * zoomFactor;
@@ -1109,9 +1156,7 @@ function emphasisCrop(c, S, key, x, w){
 
   // 테두리
   c.save();
-  c.beginPath();
-  if(S.shape === 'eye') c.rect(rect.x, rect.y, rect.w, rect.h);
-  else c.ellipse(cx, cy, rx, ry, 0, 0, Math.PI*2);
+  path();
   c.strokeStyle = 'rgba(249,248,245,.85)'; c.lineWidth = 2.5; c.stroke();
   c.restore();
 }
@@ -1119,12 +1164,13 @@ function emphasisCrop(c, S, key, x, w){
 /* ══════════════ T4 3분할 경과 비교형 ══════════════ */
 function drawT4(c, S){
   const M = 72, GAP = 16;
+  const EX = H - 1080;
   const pw = (936 - GAP*2) / 3;
-  const ph = pw * 1.43;
+  const ph = Math.round(pw * 1.43 + EX*0.50);      // 1:1 431 · 4:5 566
 
   drawTrust(c, false);
 
-  const titleTop = state.trustOn ? 178 : 146;
+  const titleTop = (state.trustOn ? 178 : 146) + Math.round(EX*0.06);
   c.save();
   c.font = '700 46px ' + FONT; c.fillStyle = C.teal; c.textAlign = 'left';
   c.fillText(cut(c, S.title || '', 936), M, titleTop + 40);
@@ -1144,7 +1190,7 @@ function drawT4(c, S){
   c.save();
   c.font = '500 26px ' + FONT; c.fillStyle = '#5C625E'; c.textAlign = 'center';
   const lines = wrap(c, S.sum || '', 800).slice(0,2);
-  const boxY = imgY + ph + 60, boxH = 118;
+  const boxY = imgY + ph + 60 + Math.round(EX*0.10), boxH = 118 + Math.round(EX*0.06);
   c.fillStyle = '#FCFBF9'; c.strokeStyle = C.line; c.lineWidth = 1;
   rr(c, M, boxY, 936, boxH, 10); c.fill(); c.stroke();
   c.fillStyle = '#5C625E';
@@ -1152,12 +1198,13 @@ function drawT4(c, S){
   lines.forEach((l,i)=> c.fillText(l, W/2, cy0 + i*38 + 9));
   c.restore();
 
-  drawFooter(c, false, 952, 1002);
+  drawFooter(c, false, H - 128, H - 78);
 }
 
 /* ══════════════ T5 원인 포인트형 ══════════════ */
 function drawT5(c, S){
   const M = 72;
+  const EX = H - 1080;
   drawTrust(c, false);
 
   const titleTop = state.trustOn ? 188 : 150;
@@ -1168,9 +1215,10 @@ function drawT5(c, S){
   c.restore();
 
   // 원형 사진
-  const d = 420, cx = 278;
+  const d = 420 + Math.round(EX*0.60);              // 1:1 420 · 4:5 582
+  const cx = 278 + Math.round((d - 420)/2);
   const top = titleTop + (lines.length > 1 ? 118 : 86);
-  const circY = Math.max(top, 358) + d/2;
+  const circY = Math.max(top, 358) + d/2 + Math.round(EX*0.06);
   drawSlot(c, 'main', cx - d/2, circY - d/2, d, d, {round:true, tone:'a'});
   drawGuides(c, cx - d/2, circY - d/2, d, d, true);
   c.save();
@@ -1180,7 +1228,8 @@ function drawT5(c, S){
 
   // 콜아웃
   const ax = cx + d/2*0.70, ay = circY - d/2*0.70;
-  const lx = 588, ly = ay - 44;
+  const lx = Math.max(588, Math.round(ax) + 26), ly = ay - 44;
+  const tw = Math.min(412, 1008 - lx);
   c.save();
   c.setLineDash([7,6]); c.strokeStyle = C.terra; c.lineWidth = 2;
   c.beginPath(); c.moveTo(ax, ay); c.lineTo(lx - 12, ly + 20); c.stroke();
@@ -1189,15 +1238,17 @@ function drawT5(c, S){
   c.beginPath(); c.arc(ax, ay, 11, 0, Math.PI*2); c.strokeStyle = 'rgba(157,75,55,.35)'; c.lineWidth = 1.5; c.stroke();
 
   c.fillStyle = C.terra; c.font = '700 27px ' + FONT; c.textAlign = 'left';
-  c.fillText(cut(c, S.callout || '', 400), lx, ly + 24);
+  c.fillText(cut(c, S.callout || '', tw), lx, ly + 24);
   c.fillStyle = '#757B76'; c.font = '500 19px ' + FONT;
-  wrap(c, S.lead || '', 412).slice(0,3).forEach((l,i)=>{
+  wrap(c, S.lead || '', tw).slice(0,3).forEach((l,i)=>{
     c.fillText(l, lx, ly + 64 + i*29);
   });
   c.restore();
 
   // 포인트 박스
-  const bw = (936 - 28) / 3, bh = 132, by = 848;
+  const bw = (936 - 28) / 3, bh = 132 + Math.round(EX*0.32);
+  const by = (H - 64) - 36 - bh;
+  const pad = Math.round((bh - 132)/2);
   const pts = [[S.p1,S.d1],[S.p2,S.d2],[S.p3,S.d3]];
   pts.forEach((p,i)=>{
     const x = M + i*(bw+14);
@@ -1206,23 +1257,39 @@ function drawT5(c, S){
     rr(c, x, by, bw, bh, 8); c.fill(); c.stroke();
 
     c.fillStyle = C.terra; c.font = '700 17px ' + FONT; c.textAlign = 'left';
-    c.fillText('0' + (i+1), x + 18, by + 34);
+    c.fillText('0' + (i+1), x + 18, by + 34 + pad);
     c.fillStyle = C.teal; c.font = '700 22px ' + FONT;
-    c.fillText(cut(c, p[0] || '', bw - 36), x + 46, by + 34);
+    c.fillText(cut(c, p[0] || '', bw - 36), x + 46, by + 34 + pad);
     c.fillStyle = '#757B76'; c.font = '500 15px ' + FONT;
     wrap(c, p[1] || '', bw - 36).slice(0,2).forEach((l,j)=>{
-      c.fillText(l, x + 18, by + 70 + j*22);
+      c.fillText(l, x + 18, by + 70 + pad + j*22);
     });
     c.restore();
   });
 
-  drawFooter(c, false, 1016, 1058);
+  drawFooter(c, false, H - 64, H - 22);
 }
 
 /* ══════════════ 렌더 ══════════════ */
 const DRAW = {T1:drawT1, T2:drawT2, T3:drawT3, T4:drawT4, T5:drawT5};
+const canvasWrap = document.querySelector('.canvas-wrap');
+
+/* 카드 비율(1:1 · 4:5)에 따라 캔버스 해상도를 잡는다 */
+function applyCanvasSize(){
+  W = BASE_W;
+  H = state.ratio === '4:5' ? 1350 : 1080;
+  if(cv.width !== W) cv.width = W;
+  if(cv.height !== H) cv.height = H;
+  cv.style.aspectRatio = W + ' / ' + H;
+  if(canvasWrap) canvasWrap.classList.toggle('r45', H !== W);
+  const badge = document.querySelector('.badge');
+  if(badge) badge.textContent = W + ' × ' + H;
+  const save = document.getElementById('btnSave');
+  if(save) save.textContent = W + '×' + H + ' PNG 저장';
+}
 
 function render(){
+  applyCanvasSize();
   ctx.save();
   ctx.clearRect(0,0,W,H);
   ctx.fillStyle = C.ivory; ctx.fillRect(0,0,W,H);
@@ -1434,6 +1501,33 @@ document.querySelectorAll('[data-copy-emph]').forEach(btn=>{
   });
 });
 
+/* T3 강조 창 빠른 위치(하관·눈매·중앙) */
+document.querySelectorAll('[data-preset]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const side = btn.dataset.preset;
+    if(!state.T3[side]) state.T3[side] = {zoom:1.22, fx:0, fy:0, size:1};
+    const t = state.T3[side];
+    const v = btn.dataset.value;
+    t.fx = 0;
+    t.fy = v === 'chin' ? Math.round(H*0.185) : v === 'eye' ? -Math.round(H*0.10) : 0;
+    applyStateToInputs();
+    saveState(); render();
+    toast(v === 'chin' ? '강조 창을 하관으로 옮겼습니다' : v === 'eye' ? '강조 창을 눈매로 옮겼습니다' : '강조 창을 가운데로 옮겼습니다');
+  });
+});
+
+/* 카드 비율 전환 (1:1 · 4:5) */
+function syncRatio(){
+  document.querySelectorAll('[data-ratio]').forEach(b=> b.classList.toggle('on', b.dataset.ratio === state.ratio));
+}
+document.querySelectorAll('[data-ratio]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    state.ratio = btn.dataset.ratio;
+    saveState(); syncRatio(); render();
+    toast(W + '×' + H + ' 카드로 전환했습니다');
+  });
+});
+
 /* ══════════════ 저장 / 초기화 ══════════════ */
 function download(){
   exporting = true;
@@ -1441,7 +1535,7 @@ function download(){
   const d = new Date();
   const stamp = d.getFullYear() +
     String(d.getMonth()+1).padStart(2,'0') + String(d.getDate()).padStart(2,'0');
-  const name = 'iloura-' + state.template + '-' + stamp + '.png';
+  const name = 'iloura-' + state.template + (state.ratio === '4:5' ? '-4x5' : '') + '-' + stamp + '.png';
 
   const finish = (url, revoke)=>{
     const a = document.createElement('a');
@@ -1450,7 +1544,7 @@ function download(){
     if(revoke) setTimeout(()=> URL.revokeObjectURL(url), 10000);
     exporting = false;
     render();
-    toast('1080×1080 PNG 저장 완료');
+    toast(W + '×' + H + ' PNG 저장 완료');
   };
 
   if(cv.toBlob){
@@ -1470,7 +1564,7 @@ document.getElementById('btnReset').addEventListener('click', ()=>{
   Object.keys(images).forEach(k=> delete images[k]);
   saveState();
   applyStateToInputs();
-  syncTabs(); syncVisibility(); buildSlots(); syncChips(); render();
+  syncTabs(); syncVisibility(); buildSlots(); syncChips(); syncRatio(); render();
   toast('처음 상태로 되돌렸습니다');
 });
 
@@ -1508,6 +1602,7 @@ syncTabs();
 syncVisibility();
 buildSlots();
 syncChips();
+syncRatio();
 render();
 
 if(document.fonts && document.fonts.ready){
