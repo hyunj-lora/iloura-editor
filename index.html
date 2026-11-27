@@ -458,16 +458,35 @@
     </section>
 
     <section class="sec" data-tpl="T3">
-      <div class="sec-head"><h2>부위 강조</h2><span class="hint">T3 전용</span></div>
+      <div class="sec-head"><h2>부위 강조</h2><span class="hint">T3 전용 · 전후 따로</span></div>
       <div class="sec-body tight">
         <div class="chip-row">
           <button class="chip" data-chip="T3.shape" data-value="chin">하관·턱선 타원</button>
           <button class="chip" data-chip="T3.shape" data-value="eye">눈매 직사각형</button>
         </div>
-        <div class="rng"><label>확대</label><input type="range" min="1" max="2.6" step="0.01" data-bind="T3.zoom" data-fmt="x"><output></output></div>
-        <div class="rng"><label>좌우</label><input type="range" min="-160" max="160" step="1" data-bind="T3.fx" data-fmt="px"><output></output></div>
-        <div class="rng"><label>상하</label><input type="range" min="-160" max="160" step="1" data-bind="T3.fy" data-fmt="px"><output></output></div>
-        <div class="rng"><label>크기</label><input type="range" min="0.6" max="1.6" step="0.01" data-bind="T3.size" data-fmt="x"><output></output></div>
+        <div class="field"><span class="note">관리전과 관리후의 강조 영역은 <b>각각 따로</b> 위치·배율·크기를 잡습니다. 모양(타원/직사각형)만 두 쪽에 함께 적용됩니다.</span></div>
+
+        <details class="adv" open>
+          <summary>관리전 강조 (Before)</summary>
+          <div class="adv-body">
+            <div class="rng"><label>확대</label><input type="range" min="1" max="5" step="0.01" data-bind="T3.eb.zoom" data-fmt="x"><output></output></div>
+            <div class="rng"><label>좌우</label><input type="range" min="-400" max="400" step="1" data-bind="T3.eb.fx" data-fmt="px"><output></output></div>
+            <div class="rng"><label>상하</label><input type="range" min="-400" max="400" step="1" data-bind="T3.eb.fy" data-fmt="px"><output></output></div>
+            <div class="rng"><label>크기</label><input type="range" min="0.6" max="1.6" step="0.01" data-bind="T3.eb.size" data-fmt="x"><output></output></div>
+            <div class="chip-row"><button class="chip" data-copy-emph="b">이 값을 관리후에 복사 →</button></div>
+          </div>
+        </details>
+
+        <details class="adv" open>
+          <summary>관리후 강조 (After)</summary>
+          <div class="adv-body">
+            <div class="rng"><label>확대</label><input type="range" min="1" max="5" step="0.01" data-bind="T3.ea.zoom" data-fmt="x"><output></output></div>
+            <div class="rng"><label>좌우</label><input type="range" min="-400" max="400" step="1" data-bind="T3.ea.fx" data-fmt="px"><output></output></div>
+            <div class="rng"><label>상하</label><input type="range" min="-400" max="400" step="1" data-bind="T3.ea.fy" data-fmt="px"><output></output></div>
+            <div class="rng"><label>크기</label><input type="range" min="0.6" max="1.6" step="0.01" data-bind="T3.ea.size" data-fmt="x"><output></output></div>
+            <div class="chip-row"><button class="chip" data-copy-emph="a">이 값을 관리전에 복사 →</button></div>
+          </div>
+        </details>
       </div>
     </section>
 
@@ -501,8 +520,9 @@
         <div class="field"><span class="note">
           1. 위에서 템플릿을 고릅니다.<br>
           2. 각 칸의 <b>사진 선택</b>으로 전·후 사진을 넣습니다.<br>
-          3. 칸을 눌러 <b>확대·좌우·상하</b>를 맞춥니다. 가이드선에 눈과 턱을 기준으로 맞추면 편합니다.<br>
-          4. 지사명과 문구를 고친 뒤 <b>1080×1080 PNG 저장</b>을 누릅니다.
+          3. 칸을 눌러 <b>확대(최대 6배)·좌우·상하</b>를 맞춥니다. 가이드선에 눈과 턱을 기준으로 맞추면 편합니다.<br>
+          4. 2분할 부위 강조형은 <b>관리전·관리후 강조 영역</b>을 각각 따로 잡습니다.<br>
+          5. 지사명과 문구를 고친 뒤 <b>1080×1080 PNG 저장</b>을 누릅니다.
         </span></div>
         <div class="field"><span class="note">문구·지사명은 이 브라우저에 자동 저장됩니다. 사진은 저장되지 않으니 새로고침하면 다시 넣어주세요.</span></div>
       </div>
@@ -529,7 +549,8 @@ const DEFAULT = {
   trust:'이로우라는 사진·각도·크기 차이로 눈속임 하지 않습니다. 정확한 판독을 위해 크기만 맞춘 원본 이미지입니다.',
   T1:{eyebrow:'이로우라 안면비대칭 관리', t1:'턱선이 달라지면', t2:'얼굴의 중심이 달라집니다', pb:'관리전', pa:'관리 후'},
   T2:{title:'같은 조도, 같은 각도, 같은 렌즈', sum:'관리 전과 7회차, 크기만 맞춰 나란히 놓았습니다.\n각도와 조명은 동일하게 촬영했습니다.', bx:0, ba:0, by:0, ax:0, aa:0, ay:0, afterColor:'teal'},
-  T3:{title:'하관의 무게가 빠지면 생기는 변화', shape:'chin', zoom:1.22, fx:0, fy:0, size:1, pb:'관리전', pa:'관리 후'},
+  T3:{title:'하관의 무게가 빠지면 생기는 변화', shape:'chin', pb:'관리전', pa:'관리 후',
+      eb:{zoom:1.22, fx:0, fy:0, size:1}, ea:{zoom:1.22, fx:0, fy:0, size:1}},
   T4:{title:'회차별 변화 기록', l1:'관리전', l2:'3회차', l3:'7회차', sum:'같은 조건에서 촬영한 원본을 크기만 맞췄습니다.'},
   T5:{title:'얼굴이 무거워 보이는 이유는\n따로 있습니다', callout:'하관 볼륨',
       lead:'턱선 아래 볼륨이 무너지면 얼굴 전체가 무거워 보입니다. 관리 후 가장 먼저 달라지는 지점입니다.',
@@ -578,10 +599,52 @@ function loadState(){
     const raw = localStorage.getItem(STORE_KEY);
     if(raw){
       const saved = JSON.parse(raw);
+      migrate(saved);
       merge(base, saved);
     }
   }catch(e){ /* 저장값이 깨져도 기본값으로 시작 */ }
+  sanitize(base);
   return base;
+}
+
+/* 예전 저장값(전후 공용 T3.zoom·fx·fy·size)을 전후 개별 설정으로 옮긴다 */
+function migrate(saved){
+  if(!saved || typeof saved !== 'object') return;
+  const t3 = saved.T3;
+  if(t3 && typeof t3 === 'object'){
+    const hasLegacy = ['zoom','fx','fy','size'].some(k=> k in t3);
+    if(hasLegacy && (!t3.eb || !t3.ea)){
+      const num = (v, d)=> (typeof v === 'number' && isFinite(v)) ? v : d;
+      const v = {zoom:num(t3.zoom, 1.22), fx:num(t3.fx, 0), fy:num(t3.fy, 0), size:num(t3.size, 1)};
+      if(!t3.eb) t3.eb = Object.assign({}, v);
+      if(!t3.ea) t3.ea = Object.assign({}, v);
+    }
+    delete t3.zoom; delete t3.fx; delete t3.fy; delete t3.size;
+  }
+}
+
+/* 저장값을 현재 슬라이더 범위 안으로 다듬는다(범위를 벗어난 옛 값이 있어도 안전) */
+function sanitize(st){
+  const clamp = (v, lo, hi, d)=>{
+    v = (typeof v === 'number' && isFinite(v)) ? v : d;
+    return Math.min(hi, Math.max(lo, v));
+  };
+  if(!st.tr || typeof st.tr !== 'object') st.tr = {};
+  ['b','a','s1','s2','s3','main'].forEach(k=>{
+    if(!st.tr[k] || typeof st.tr[k] !== 'object') st.tr[k] = {};
+    st.tr[k].zoom = clamp(st.tr[k].zoom, 1, 6, 1);
+    st.tr[k].x = clamp(st.tr[k].x, -700, 700, 0);
+    st.tr[k].y = clamp(st.tr[k].y, -700, 700, 0);
+  });
+  if(!st.T3 || typeof st.T3 !== 'object') st.T3 = JSON.parse(JSON.stringify(DEFAULT.T3));
+  ['eb','ea'].forEach(k=>{
+    if(!st.T3[k] || typeof st.T3[k] !== 'object') st.T3[k] = {};
+    st.T3[k].zoom = clamp(st.T3[k].zoom, 1, 5, 1.22);
+    st.T3[k].fx = clamp(st.T3[k].fx, -400, 400, 0);
+    st.T3[k].fy = clamp(st.T3[k].fy, -400, 400, 0);
+    st.T3[k].size = clamp(st.T3[k].size, 0.6, 1.6, 1);
+  });
+  if(st.T3.shape !== 'eye' && st.T3.shape !== 'chin') st.T3.shape = 'chin';
 }
 function merge(dst, src){
   for(const k in src){
@@ -1002,17 +1065,18 @@ function drawT3(c, S){
 function emphasisCrop(c, S, key, x, w){
   const img = images[key];
   const s = state.tr[key] || {zoom:1,x:0,y:0};
-  const zoomFactor = (S.zoom || 1);
-  const sizeMul = S.size || 1;
+  const e = (key === 'b' ? S.eb : S.ea) || {};   // 관리전·관리후 각각의 강조 설정
+  const zoomFactor = (e.zoom || 1);
+  const sizeMul = (e.size || 1);
 
-  let cx = x + w/2 + (S.fx || 0);
+  let cx = x + w/2 + (e.fx || 0);
   let cy, rx, ry, rect = null;
   if(S.shape === 'eye'){
-    cy = H*0.40 + (S.fy || 0);
+    cy = H*0.40 + (e.fy || 0);
     rx = w*0.24*sizeMul; ry = H*0.085*sizeMul;
     rect = {x:cx-rx, y:cy-ry, w:rx*2, h:ry*2};
   } else {
-    cy = H*0.685 + (S.fy || 0);
+    cy = H*0.685 + (e.fy || 0);
     rx = w*0.245*sizeMul; ry = H*0.138*sizeMul;
   }
 
@@ -1224,9 +1288,9 @@ function buildSlots(){
         '<button class="slot-del" title="사진 삭제">×</button>' +
       '</div>' +
       '<div class="slot-body">' +
-        '<div class="rng"><label>확대</label><input type="range" min="1" max="2.6" step="0.01" value="' + tr.zoom + '" data-slot-range="zoom"><output></output></div>' +
-        '<div class="rng"><label>좌우</label><input type="range" min="-300" max="300" step="1" value="' + tr.x + '" data-slot-range="x"><output></output></div>' +
-        '<div class="rng"><label>상하</label><input type="range" min="-300" max="300" step="1" value="' + tr.y + '" data-slot-range="y"><output></output></div>' +
+        '<div class="rng"><label>확대</label><input type="range" min="1" max="6" step="0.01" value="' + tr.zoom + '" data-slot-range="zoom"><output></output></div>' +
+        '<div class="rng"><label>좌우</label><input type="range" min="-700" max="700" step="1" value="' + tr.x + '" data-slot-range="x"><output></output></div>' +
+        '<div class="rng"><label>상하</label><input type="range" min="-700" max="700" step="1" value="' + tr.y + '" data-slot-range="y"><output></output></div>' +
       '</div>';
 
     const head = card.querySelector('.slot-head');
@@ -1357,6 +1421,18 @@ function syncChips(){
     btn.classList.toggle('on', getPath(btn.dataset.chip) === btn.dataset.value);
   });
 }
+
+/* T3 강조 영역: 관리전 ↔ 관리후 값 복사 */
+document.querySelectorAll('[data-copy-emph]').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    const from = btn.dataset.copyEmph === 'a' ? 'ea' : 'eb';
+    const to = from === 'ea' ? 'eb' : 'ea';
+    state.T3[to] = Object.assign({}, state.T3[from]);
+    applyStateToInputs();
+    saveState(); render();
+    toast(from === 'eb' ? '관리전 강조 값을 관리후에 복사했습니다' : '관리후 강조 값을 관리전에 복사했습니다');
+  });
+});
 
 /* ══════════════ 저장 / 초기화 ══════════════ */
 function download(){
