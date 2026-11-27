@@ -1301,7 +1301,7 @@ function drawT5(c, S){
   const d = wide ? 520 : 420;
   const cx = wide ? 300 : 278;
   const top = titleTop + (lines.length > 1 ? 118 : 86);
-  const circY = Math.max(top, 358) + d/2 + (wide ? 16 : 0);
+  const circY = Math.max(top, wide ? 344 : 358) + d/2;
   drawSlot(c, 'main', cx - d/2, circY - d/2, d, d, {round:true, tone:'a'});
   drawGuides(c, cx - d/2, circY - d/2, d, d, true);
   c.save();
